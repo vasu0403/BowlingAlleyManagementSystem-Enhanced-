@@ -156,7 +156,6 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("BOYBOYB");
 		if (e.getSource().equals(addPatron)) {
 			if (selectedNick != null && party.size() < maxSize) {
 				if (party.contains(selectedNick)) {

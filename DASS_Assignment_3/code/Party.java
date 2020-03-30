@@ -22,6 +22,8 @@
  *
  */
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Party {
@@ -35,8 +37,13 @@ public class Party {
 	 * @param bowlers	Vector of bowlers that are in this party
 	 */
 		
-    public Party( Vector bowlers ) {
-		myBowlers = new Vector(bowlers);
+    public Party( Vector partyNicks ) {
+		Vector partyBowlers = new Vector();
+		for (int i = 0; i < partyNicks.size(); i++) {
+			Bowler newBowler = registerPatron(((String) partyNicks.get(i)));
+			partyBowlers.add(newBowler);
+		}
+		myBowlers = new Vector(partyBowlers);
     }
 
 	/**
@@ -49,4 +56,34 @@ public class Party {
 		return myBowlers;
     }
 
+	/**
+	 * Retrieves a matching Bowler from the bowler database.
+	 *
+	 * @param nickName	The NickName of the Bowler
+	 *
+	 * @return a Bowler object.
+	 *
+	 */
+
+	private Bowler registerPatron(String nickName) {
+		Bowler patron = null;
+
+		try {
+			// only one patron / nick.... no dupes, no checks
+
+			patron = BowlerFile.getBowlerInfo(nickName);
+
+		} catch (FileNotFoundException e) {
+			System.err.println("Error..." + e);
+		} catch (IOException e) {
+			System.err.println("Error..." + e);
+		}
+
+		return patron;
+	}
+
+	public String getFirstMemberNickName() {
+		String firstMemberNickName = ((Bowler)((Vector) this.getMembers()).get(0)).getNickName();
+		return firstMemberNickName;
+	}
 }
