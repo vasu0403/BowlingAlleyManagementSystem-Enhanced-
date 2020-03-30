@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3da952f-50ca-4ed6-ae64-2b1d901be9e6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/AddPartyView.java" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/AddPartyView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/BOWLERS.DAT" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/BOWLERS.DAT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/ControlDesk.java" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/ControlDesk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/ControlDeskView.java" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/ControlDeskView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/Party.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DASS_Assignment_3/code/SCOREHISTORY.DAT" beforeDir="false" afterPath="$PROJECT_DIR$/DASS_Assignment_3/code/SCOREHISTORY.DAT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/AddPartyView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/AddPartyView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/BOWLERS.DAT" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/BOWLERS.DAT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/SCOREHISTORY.DAT" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/SCOREHISTORY.DAT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/ControlDesk.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/ControlDesk.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/ControlDeskView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/ControlDeskView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DASS_Assignment_3/Party.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DASS_Assignment_3/Party.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,26 +104,30 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1585490764044" />
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1585590746168">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1585595532797">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585590746168" />
-    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1585590746168">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585595532797" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1585595532796">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585590746168" />
-    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1585590746168">
+    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585595532796" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1585595532795">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585590746168" />
-    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1585590746168">
+    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585595532795" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1585595532796">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585590746168" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585595532796" />
     <state x="482" y="187" key="SettingsEditor" timestamp="1585492313056">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1585492313056" />
+    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585593289903">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="761" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585593289903" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1585584851507">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

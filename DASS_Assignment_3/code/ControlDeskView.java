@@ -55,19 +55,12 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		controlsPanel.setLayout(new GridLayout(3, 1));
 		controlsPanel.setBorder(new TitledBorder("Controls"));
 
-		addParty = new JButton("Add Party");
+		addParty = new JButton("Add Party");				//		Very repetitive code. Work can be done by calling same function with different parameter instead.
 		JPanel addPartyPanel = new JPanel();
 		addPartyPanel.setLayout(new FlowLayout());
 		addParty.addActionListener(this);
 		addPartyPanel.add(addParty);
 		controlsPanel.add(addPartyPanel);
-
-		assign = new JButton("Assign Lanes");
-		JPanel assignPanel = new JPanel();
-		assignPanel.setLayout(new FlowLayout());
-		assign.addActionListener(this);
-		assignPanel.add(assign);
-//		controlsPanel.add(assignPanel);
 
 		finished = new JButton("Finished");
 		JPanel finishedPanel = new JPanel();
@@ -146,9 +139,6 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(addParty)) {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
-		}
-		if (e.getSource().equals(assign)) {
-			controlDesk.assignLane();
 		}
 		if (e.getSource().equals(finished)) {
 			win.hide();

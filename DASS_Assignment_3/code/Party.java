@@ -30,31 +30,6 @@ public class Party {
 
 	/** Vector of bowlers in this party */	
     private Vector myBowlers;
-	
-	/**
-	 * Constructor for a Party
-	 * 
-	 * @param bowlers	Vector of bowlers that are in this party
-	 */
-		
-    public Party( Vector partyNicks ) {
-		Vector partyBowlers = new Vector();
-		for (int i = 0; i < partyNicks.size(); i++) {
-			Bowler newBowler = registerPatron(((String) partyNicks.get(i)));
-			partyBowlers.add(newBowler);
-		}
-		myBowlers = new Vector(partyBowlers);
-    }
-
-	/**
-	 * Accessor for members in this party
-	 * 
-	 * @return 	A vector of the bowlers in this party
-	 */
-
-    public Vector getMembers() {
-		return myBowlers;
-    }
 
 	/**
 	 * Retrieves a matching Bowler from the bowler database.
@@ -81,6 +56,31 @@ public class Party {
 
 		return patron;
 	}
+
+	/**
+	 * Constructor for a Party
+	 *
+	 * @param bowlers	Vector of bowlers that are in this party
+	 */
+
+    public Party( Vector partyNicks ) {
+		Vector partyBowlers = new Vector();
+		for (int i = 0; i < partyNicks.size(); i++) {
+			Bowler newBowler = registerPatron(((String) partyNicks.get(i)));
+			partyBowlers.add(newBowler);
+		}
+		myBowlers = new Vector(partyBowlers);
+    }
+
+	/**
+	 * Accessor for members in this party
+	 *
+	 * @return 	A vector of the bowlers in this party
+	 */
+
+    public Vector getMembers() {
+		return myBowlers;
+    }
 
 	public String getFirstMemberNickName() {
 		String firstMemberNickName = ((Bowler)((Vector) this.getMembers()).get(0)).getNickName();
