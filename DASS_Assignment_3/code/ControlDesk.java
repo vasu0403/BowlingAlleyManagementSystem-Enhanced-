@@ -53,7 +53,7 @@ class ControlDesk extends Thread {
 
 	/** The number of lanes represented */
 	private int numLanes;
-	
+
 	/** The collection of subscribers */
 	private Vector subscribers;
 
@@ -64,17 +64,19 @@ class ControlDesk extends Thread {
      *
      */
 
-	public ControlDesk(int numLanes) {
+    private void initFields(int numLanes) {
 		this.numLanes = numLanes;
-		lanes = new HashSet(numLanes);
 		partyQueue = new Queue();
-
 		subscribers = new Vector();
-
+		lanes = new HashSet(numLanes);
 		for (int i = 0; i < numLanes; i++) {
 			lanes.add(new Lane());
 		}
-		
+	}
+
+	public ControlDesk(int numLanes) {
+
+		this.initFields(numLanes);
 		this.start();
 
 	}
