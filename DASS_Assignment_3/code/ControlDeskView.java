@@ -17,7 +17,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
 
 import java.util.*;
 
@@ -39,8 +38,8 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	private JPanel addControlPanel() {
 		// Controls Panel
 		JPanel controlsPanel = Panels.gridPanel("Controls", 3, 1);
-		addParty = Panels.addButton("Add Party", controlsPanel, this);
-		finished = Panels.addButton("Finished", controlsPanel, this);
+		addParty = Panels.button("Add Party", controlsPanel, this);
+		finished = Panels.button("Finished", controlsPanel, this);
 		return controlsPanel;
 	}
 
@@ -65,9 +64,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 
 	private JPanel addPartyQueuePanel() {
 		// Party Queue Panel
-		JPanel partyPanel = new JPanel();
-		partyPanel.setLayout(new FlowLayout());
-		partyPanel.setBorder(new TitledBorder("Party Queue"));
+		JPanel partyPanel = Panels.flowPanel("Party Queue");
 
 		Vector empty = new Vector();
 		empty.add("(Empty)");
@@ -89,9 +86,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		this.maxMembers = maxMembers;
 		int numLanes = controlDesk.getNumLanes();
 
-		win = new JFrame("Control Desk");
-		win.getContentPane().setLayout(new BorderLayout());
-		((JPanel) win.getContentPane()).setOpaque(false);
+		win = Panels.window("Control Desk");
 
 		JPanel colPanel = new JPanel();
 		colPanel.setLayout(new BorderLayout());

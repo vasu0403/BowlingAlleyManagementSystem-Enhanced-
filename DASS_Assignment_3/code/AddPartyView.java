@@ -32,7 +32,6 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 
 import java.util.*;
-import java.text.*;
 
 /**
  * Constructor for GUI used to Add Parties to the waiting party queue.
@@ -58,17 +57,12 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		this.controlDesk = controlDesk;
 		maxSize = max;
 
-		win = new JFrame("Add Party");
-		win.getContentPane().setLayout(new BorderLayout());
-		((JPanel) win.getContentPane()).setOpaque(false);
+		win = Panels.window("Add Party");
 
-		JPanel colPanel = new JPanel();
-		colPanel.setLayout(new GridLayout(1, 3));
+		JPanel colPanel = Panels.gridPanel("", 1, 3);
 
 		// Party Panel
-		JPanel partyPanel = new JPanel();
-		partyPanel.setLayout(new FlowLayout());
-		partyPanel.setBorder(new TitledBorder("Your Party"));
+		JPanel partyPanel = Panels.flowPanel("Your Party");
 
 		party = new Vector();
 		Vector empty = new Vector();
@@ -83,9 +77,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		partyPanel.add(partyPane);
 
 		// Bowler Database
-		JPanel bowlerPanel = new JPanel();
-		bowlerPanel.setLayout(new FlowLayout());
-		bowlerPanel.setBorder(new TitledBorder("Bowler Database"));
+		JPanel bowlerPanel = Panels.flowPanel("Bowler Database");
 
 		try {
 			bowlerdb = new Vector(BowlerFile.getBowlers());
@@ -103,39 +95,15 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		bowlerPanel.add(bowlerPane);
 
 		// Button Panel
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(4, 1));
+		JPanel buttonPanel = Panels.gridPanel("", 4, 1);
 
 		Insets buttonMargin = new Insets(4, 4, 4, 4);
 
-		addPatron = new JButton("Add to Party");
-		JPanel addPatronPanel = new JPanel();
-		addPatronPanel.setLayout(new FlowLayout());
-		addPatron.addActionListener(this);
-		addPatronPanel.add(addPatron);
+		addPatron = Panels.button("Add to Party", buttonPanel, this);
+		remPatron = Panels.button("Remove Member", buttonPanel, this);
+		newPatron = Panels.button("New Patron", buttonPanel, this);
+		finished = Panels.button("Finished", buttonPanel, this);
 
-		remPatron = new JButton("Remove Member");
-		JPanel remPatronPanel = new JPanel();
-		remPatronPanel.setLayout(new FlowLayout());
-		remPatron.addActionListener(this);
-		remPatronPanel.add(remPatron);
-
-		newPatron = new JButton("New Patron");
-		JPanel newPatronPanel = new JPanel();
-		newPatronPanel.setLayout(new FlowLayout());
-		newPatron.addActionListener(this);
-		newPatronPanel.add(newPatron);
-
-		finished = new JButton("Finished");
-		JPanel finishedPanel = new JPanel();
-		finishedPanel.setLayout(new FlowLayout());
-		finished.addActionListener(this);
-		finishedPanel.add(finished);
-
-		buttonPanel.add(addPatronPanel);
-		buttonPanel.add(remPatronPanel);
-		buttonPanel.add(newPatronPanel);
-		buttonPanel.add(finishedPanel);
 
 		// Clean up main panel
 		colPanel.add(partyPanel);
