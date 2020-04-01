@@ -54,14 +54,10 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 		partyPanel.add( memberList );
 
 		// Button Panel
-		// Button Panel
 		JPanel buttonPanel = Panels.gridPanel("", 2, 1);
-
-		Insets buttonMargin = new Insets(4, 4, 4, 4);
 
 		printButton = Panels.button("Print Report", buttonPanel, this);
 		finished = Panels.button("Finished", buttonPanel, this);
-
 
 		// Clean up main panel
 		colPanel.add(partyPanel);
@@ -112,15 +108,5 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 		win.hide();
 	}
 
-	public static void main( String args[] ) {
-		Vector bowlers = new Vector();
-		for ( int i=0; i<4; i++ ) {
-			bowlers.add( new Bowler( "aaaaa", "aaaaa", "aaaaa" ) );
-		}
-		Party party = new Party( bowlers );
-		String partyName="wank";
-		EndGameReport e = new EndGameReport( partyName, party );
-	}
-	
 }
 

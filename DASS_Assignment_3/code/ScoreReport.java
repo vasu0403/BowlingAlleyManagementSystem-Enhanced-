@@ -47,7 +47,7 @@ public class ScoreReport {
 		}
 		content += "\n\n";
 		content += "Thank you for your continuing patronage.";
-
+		System.out.println(content);
 	}
 
 	public void sendEmail(String recipient) {
@@ -100,6 +100,7 @@ public class ScoreReport {
 	}
 
 	public void sendln(BufferedReader in, BufferedWriter out, String s) {
+		System.out.println("HERERERERERERERERER");
 		try {
 			out.write(s + "\r\n");
 			out.flush();

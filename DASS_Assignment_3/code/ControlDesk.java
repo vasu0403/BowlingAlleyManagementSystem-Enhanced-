@@ -64,7 +64,19 @@ class ControlDesk extends Thread {
      *
      */
 
-    private void initFields(int numLanes) {
+//    private void initFields(int numLanes) {
+//		this.numLanes = numLanes;
+//		partyQueue = new Queue();
+//		subscribers = new Vector();
+//		lanes = new HashSet(numLanes);
+//		for (int i = 0; i < numLanes; i++) {
+//			lanes.add(new Lane());
+//		}
+//	}
+
+	public ControlDesk(int numLanes) {
+
+//		this.initFields(numLanes);
 		this.numLanes = numLanes;
 		partyQueue = new Queue();
 		subscribers = new Vector();
@@ -72,11 +84,6 @@ class ControlDesk extends Thread {
 		for (int i = 0; i < numLanes; i++) {
 			lanes.add(new Lane());
 		}
-	}
-
-	public ControlDesk(int numLanes) {
-
-		this.initFields(numLanes);
 		this.start();
 
 	}
@@ -103,14 +110,14 @@ class ControlDesk extends Thread {
      */
 
 	public void assignLane() {
-		Iterator it = lanes.iterator();
+		Iterator it = getLanes().iterator();
 
-		while (it.hasNext() && partyQueue.hasMoreElements()) {
+		while (it.hasNext() && getQueue().hasMoreElements()) {
 			Lane curLane = (Lane) it.next();
 
 			if (curLane.isPartyAssigned() == false) {
 				System.out.println("ok... assigning this party");
-				curLane.assignParty(((Party) partyQueue.next()));
+				curLane.assignParty(((Party) getQueue().next()));
 			}
 		}
 		publish(new ControlDeskEvent(getPartyQueue()));
@@ -119,9 +126,9 @@ class ControlDesk extends Thread {
     /**
      */
 
-	public void viewScores(Lane ln) {
-		// TODO: attach a LaneScoreView object to that lane
-	}
+//	public void viewScores(Lane ln) {
+//		// TODO: attach a LaneScoreView object to that lane
+//	}
 
     /**
      * Creates a party from a Vector of nickNAmes and adds them to the wait queue.
@@ -132,7 +139,7 @@ class ControlDesk extends Thread {
 
 	public void addPartyQueue(Vector partyNicks) {
 		Party newParty = new Party(partyNicks);
-		partyQueue.add(newParty);
+		getQueue().add(newParty);
 		publish(new ControlDeskEvent(getPartyQueue()));
 	}
 
@@ -145,8 +152,8 @@ class ControlDesk extends Thread {
 
 	public Vector getPartyQueue() {
 		Vector displayPartyQueue = new Vector();
-		for ( int i=0; i < ( (Vector)partyQueue.asVector()).size(); i++ ) {
-			String nextParty = ((Party) partyQueue.asVector().get(i)).getFirstMemberNickName() + "'s Party";
+		for ( int i=0; i < ( (Vector)getQueue().asVector()).size(); i++ ) {
+			String nextParty = ((Party) getQueue().asVector().get(i)).getFirstMemberNickName() + "'s Party";
 			displayPartyQueue.addElement(nextParty);
 		}
 		return displayPartyQueue;
@@ -202,4 +209,5 @@ class ControlDesk extends Thread {
 	public HashSet getLanes() {
 		return lanes;
 	}
+	public Queue getQueue() { return partyQueue; }
 }

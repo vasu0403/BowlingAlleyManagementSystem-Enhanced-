@@ -10,14 +10,11 @@ import java.util.*;
 
 public class LaneView implements LaneObserver, ActionListener {
 
-	private int roll;
 	private boolean initDone = true;
 
 	JFrame frame;
 	Container cpanel;
 	Vector bowlers;
-	int cur;
-	Iterator bowlIt;
 
 	JPanel[][] balls;
 	JLabel[][] ballLabel;
@@ -62,9 +59,7 @@ public class LaneView implements LaneObserver, ActionListener {
 		bowlers = party.getMembers();
 		int numBowlers = bowlers.size();
 
-		JPanel panel = new JPanel();
-
-		panel.setLayout(new GridLayout(0, 1));
+		JPanel panel = Panels.gridPanel("", 0, 1);
 
 		balls = new JPanel[numBowlers][23];
 		ballLabel = new JLabel[numBowlers][23];
@@ -85,15 +80,13 @@ public class LaneView implements LaneObserver, ActionListener {
 
 		for (int i = 0; i != numBowlers; i++) {
 			for (int j = 0; j != 9; j++) {
-				ballGrid[i][j] = new JPanel();
-				ballGrid[i][j].setLayout(new GridLayout(0, 3));
+				ballGrid[i][j] = Panels.gridPanel("", 0, 3);
 				ballGrid[i][j].add(new JLabel("  "), BorderLayout.EAST);
 				ballGrid[i][j].add(balls[i][2 * j], BorderLayout.EAST);
 				ballGrid[i][j].add(balls[i][2 * j + 1], BorderLayout.EAST);
 			}
 			int j = 9;
-			ballGrid[i][j] = new JPanel();
-			ballGrid[i][j].setLayout(new GridLayout(0, 3));
+			ballGrid[i][j] = Panels.gridPanel("", 0, 3);
 			ballGrid[i][j].add(balls[i][2 * j]);
 			ballGrid[i][j].add(balls[i][2 * j + 1]);
 			ballGrid[i][j].add(balls[i][2 * j + 2]);
@@ -144,15 +137,7 @@ public class LaneView implements LaneObserver, ActionListener {
 				JPanel buttonPanel = new JPanel();
 				buttonPanel.setLayout(new FlowLayout());
 
-				Insets buttonMargin = new Insets(4, 4, 4, 4);
-
-				maintenance = new JButton("Maintenance Call");
-				JPanel maintenancePanel = new JPanel();
-				maintenancePanel.setLayout(new FlowLayout());
-				maintenance.addActionListener(this);
-				maintenancePanel.add(maintenance);
-
-				buttonPanel.add(maintenancePanel);
+				maintenance = Panels.button("Maintenance Call", buttonPanel, this);
 
 				cpanel.add(buttonPanel, "South");
 
