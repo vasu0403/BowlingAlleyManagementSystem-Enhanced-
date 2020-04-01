@@ -97,8 +97,6 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		// Button Panel
 		JPanel buttonPanel = Panels.gridPanel("", 4, 1);
 
-		Insets buttonMargin = new Insets(4, 4, 4, 4);
-
 		addPatron = Panels.button("Add to Party", buttonPanel, this);
 		remPatron = Panels.button("Remove Member", buttonPanel, this);
 		newPatron = Panels.button("New Patron", buttonPanel, this);

@@ -34,4 +34,16 @@ public class Panels {
         newPanel.setBorder(new TitledBorder(title));
         return newPanel;
     }
+
+    public static JTextField textField(String title, JPanel panel ,int colSize) {
+        JTextField retField;
+        JPanel newPanel = new JPanel();
+        newPanel.setLayout(new FlowLayout());
+        JLabel newLabel = new JLabel(title);
+        retField = new JTextField("",  colSize);
+        newPanel.add(newLabel);
+        newPanel.add(retField);
+        panel.add(newPanel);
+        return retField;
+    }
 }

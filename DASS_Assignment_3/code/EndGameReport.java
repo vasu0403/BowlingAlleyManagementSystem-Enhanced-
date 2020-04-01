@@ -31,17 +31,12 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 	
 		result =0;
 		retVal = new Vector();
-		win = new JFrame("End Game Report for " + partyName + "?" );
-		win.getContentPane().setLayout(new BorderLayout());
-		((JPanel) win.getContentPane()).setOpaque(false);
+		win = Panels.window("End Game Report for " + partyName + "?");
 
-		JPanel colPanel = new JPanel();
-		colPanel.setLayout(new GridLayout( 1, 2 ));
+		JPanel colPanel = Panels.gridPanel("", 1, 2);
 
 		// Member Panel
-		JPanel partyPanel = new JPanel();
-		partyPanel.setLayout(new FlowLayout());
-		partyPanel.setBorder(new TitledBorder("Party Members"));
+		JPanel partyPanel = Panels.flowPanel("Party Members");
 		
 		Vector myVector = new Vector();
 		Iterator iter = (party.getMembers()).iterator();
@@ -60,25 +55,13 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 
 		// Button Panel
 		// Button Panel
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(2, 1));
+		JPanel buttonPanel = Panels.gridPanel("", 2, 1);
 
 		Insets buttonMargin = new Insets(4, 4, 4, 4);
 
-		printButton = new JButton("Print Report");
-		JPanel printButtonPanel = new JPanel();
-		printButtonPanel.setLayout(new FlowLayout());
-		printButton.addActionListener(this);
-		printButtonPanel.add(printButton);
+		printButton = Panels.button("Print Report", buttonPanel, this);
+		finished = Panels.button("Finished", buttonPanel, this);
 
-		finished = new JButton("Finished");
-		JPanel finishedPanel = new JPanel();
-		finishedPanel.setLayout(new FlowLayout());
-		finished.addActionListener(this);
-		finishedPanel.add(finished);
-
-		buttonPanel.add(printButton);
-		buttonPanel.add(finished);
 
 		// Clean up main panel
 		colPanel.add(partyPanel);
