@@ -25,31 +25,6 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 
 	boolean laneShowing;
 	boolean psShowing;
-
-//	private void handlePinSetter() {
-//		if ( psShowing == false ) {
-//			psv.show();
-//			psShowing=true;
-//		} else if ( psShowing == true ) {
-//			psv.hide();
-//			psShowing=false;
-//		}
-//	}
-//
-//	private void handleLane() {
-//		if ( laneShowing == false ) {
-//			lv.show();
-//			laneShowing=true;
-//		} else if ( laneShowing == true ) {
-//			lv.hide();
-//			laneShowing=false;
-//		}
-//	}
-//
-//	private void handleMaintenance() {
-//		lane.unPauseGame();
-//		maintenance.setBackground( Color.GREEN );
-//	}
 	public LaneStatusView(Lane lane, int laneNum ) {
 
 		this.lane = lane;
