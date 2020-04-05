@@ -26,7 +26,6 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 	boolean laneShowing;
 	boolean psShowing;
 	public LaneStatusView(Lane lane, int laneNum ) {
-
 		this.lane = lane;
 		this.laneNum = laneNum;
 
@@ -96,6 +95,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 				maintenance.setBackground(Color.GREEN);
 			}
 		}
+
 	}
 
 	public void receiveLaneEvent(LaneEvent le) {

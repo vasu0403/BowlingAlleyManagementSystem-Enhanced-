@@ -35,16 +35,22 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 * Displays a GUI representation of the ControlDesk
 	 *
 	 */
-	private JPanel addControlPanel() {
-		// Controls Panel
+
+	public ControlDeskView(ControlDesk controlDesk, int maxMembers) {
+
+		this.controlDesk = controlDesk;
+		this.maxMembers = maxMembers;
+		int numLanes = controlDesk.getNumLanes();
+
+		win = Panels.window("Control Desk");
+
+		JPanel colPanel = new JPanel();
+		colPanel.setLayout(new BorderLayout());
+
 		JPanel controlsPanel = Panels.gridPanel("Controls", 3, 1);
 		addParty = Panels.button("Add Party", controlsPanel, this);
 		finished = Panels.button("Finished", controlsPanel, this);
-		return controlsPanel;
-	}
 
-	private JPanel addLaneStatusPanel(int numLanes) {
-		// Lane Status Panel
 		JPanel laneStatusPanel = Panels.gridPanel("Lane Status", numLanes, 1);
 
 		HashSet lanes=controlDesk.getLanes();
@@ -59,11 +65,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 			lanePanel.setBorder(new TitledBorder("Lane" + ++laneCount ));
 			laneStatusPanel.add(lanePanel);
 		}
-		return laneStatusPanel;
-	}
 
-	private JPanel addPartyQueuePanel() {
-		// Party Queue Panel
 		JPanel partyPanel = Panels.flowPanel("Party Queue");
 
 		Vector empty = new Vector();
@@ -77,23 +79,6 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		partyPanel.add(partyPane);
 		//		partyPanel.add(partyList);
-		return partyPanel;
-	}
-
-	public ControlDeskView(ControlDesk controlDesk, int maxMembers) {
-
-		this.controlDesk = controlDesk;
-		this.maxMembers = maxMembers;
-		int numLanes = controlDesk.getNumLanes();
-
-		win = Panels.window("Control Desk");
-
-		JPanel colPanel = new JPanel();
-		colPanel.setLayout(new BorderLayout());
-
-		JPanel controlsPanel = addControlPanel();
-		JPanel laneStatusPanel = addLaneStatusPanel(numLanes);
-		JPanel partyPanel = addPartyQueuePanel();
 
 
 		// Clean up main panel
@@ -129,7 +114,6 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 */
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("ACTION");
 		if (e.getSource().equals(addParty)) {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
 		}

@@ -181,9 +181,6 @@ public class PinSetterView implements PinsetterObserver {
     public void hide() {
     	frame.hide();
     }
-    
-    public static void main ( String args [ ] ) {
-		PinSetterView pg = new PinSetterView ( 1 );
-    }
+
     
 }
