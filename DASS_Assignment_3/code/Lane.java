@@ -453,13 +453,4 @@ public class Lane extends Thread implements PinsetterObserver {
 		gameIsHalted = false;
 		publish(lanePublish());
 	}
-//	public void setGameFinished(boolean val) {
-//		gameFinished = val;
-//	}
-//	public void setFrameNumber(int val) {
-//		frameNumber = val;
-//	}
-//	public Party getParty() {
-//		return party;
-//	}
 }
