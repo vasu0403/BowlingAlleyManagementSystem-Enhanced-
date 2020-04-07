@@ -44,14 +44,21 @@ public class HistoryView implements ActionListener{
         win.setVisible(true);
     }
     public void actionPerformed( ActionEvent e ) {
+        String queryResult;
         if (e.getSource().equals(topPlayer)) {
-            result.setText("Searching for top player");
+            queryResult = Queries.topPlayer();
+            result.setText(queryResult);
+
         }
         if (e.getSource().equals(highestScore)) {
-            result.setText("Searching for highest score");
+            queryResult = Queries.highestScore();
+            result.setText(queryResult);
+
         }
         if (e.getSource().equals(lowestScore)) {
-            result.setText("Searching for lowest score");
+            queryResult = Queries.lowestScore();
+            result.setText(queryResult);
+
         }
     }
 }
