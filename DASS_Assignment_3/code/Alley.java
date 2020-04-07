@@ -26,7 +26,7 @@
  */
 
 public class Alley {
-	public ControlDesk controldesk;
+	public final ControlDesk controldesk;
 
     public Alley( int numLanes, PlayingParties playingParties ) {
         controldesk = new ControlDesk( numLanes, playingParties );

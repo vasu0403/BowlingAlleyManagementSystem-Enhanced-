@@ -22,15 +22,16 @@ import java.util.*;
 
 public class ControlDeskView implements ActionListener, ControlDeskObserver {
 
-	private JButton addParty, finished, assign;
-	private JFrame win;
-	private JList partyList;
+	private final JButton addParty;
+	private final JButton finished;
+	private final JFrame win;
+	private final JList partyList;
 	
 	/** The maximum  number of members in a party */
-	private int maxMembers;
+	private final int maxMembers;
 	
-	private ControlDesk controlDesk;
-	private PlayingParties playingParties;
+	private final ControlDesk controlDesk;
+	private final PlayingParties playingParties;
 	/**
 	 * Displays a GUI representation of the ControlDesk
 	 *
@@ -103,7 +104,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		win.setLocation(
 			((screenSize.width) / 2) - ((win.getSize().width) / 2),
 			((screenSize.height) / 2) - ((win.getSize().height) / 2));
-		win.show();
+		win.setVisible(true);
 
 	}
 
@@ -119,7 +120,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
 		}
 		if (e.getSource().equals(finished)) {
-			win.hide();
+			win.setVisible(false);
 			System.exit(0);
 		}
 	}

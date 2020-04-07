@@ -41,22 +41,19 @@
  */
 
 import java.util.*;
-import java.io.*;
 
 class ControlDesk extends Thread {
 
 	/** The collection of Lanes */
-	private HashSet lanes;
+	private final HashSet lanes;
 
-	/** The party wait queue */
-//	private Queue partyQueue;
-	private PlayingParties playingParties;
+	private final PlayingParties playingParties;
 
 	/** The number of lanes represented */
-	private int numLanes;
+	private final int numLanes;
 
 	/** The collection of subscribers */
-	private Vector subscribers;
+	private final Vector subscribers;
 
     /**
      * Constructor for the ControlDesk class
@@ -67,7 +64,6 @@ class ControlDesk extends Thread {
 
 	public ControlDesk(int numLanes, PlayingParties playingParties) {
 		this.numLanes = numLanes;
-//		partyQueue = new Queue();
 		subscribers = new Vector();
 		lanes = new HashSet(numLanes);
 		for (int i = 0; i < numLanes; i++) {
@@ -120,34 +116,6 @@ class ControlDesk extends Thread {
 //		// TODO: attach a LaneScoreView object to that lane
 //	}
 
-    /**
-     * Creates a party from a Vector of nickNAmes and adds them to the wait queue.
-     *
-     * @param partyNicks	A Vector of NickNames
-     *
-     */
-
-//	public void addPartyQueue(Vector partyNicks) {
-//		Party newParty = new Party(partyNicks);
-//		getQueue().add(newParty);
-//		publish(new ControlDeskEvent(getPartyQueue()));
-//	}
-//
-//    /**
-//     * Returns a Vector of party names to be displayed in the GUI representation of the wait queue.
-//	 *
-//     * @return a Vecotr of Strings
-//     *
-//     */
-//
-//	public Vector getPartyQueue() {
-//		Vector displayPartyQueue = new Vector();
-//		for ( int i=0; i < ( (Vector)getQueue().asVector()).size(); i++ ) {
-//			String nextParty = ((Party) getQueue().asVector().get(i)).getFirstMemberNickName() + "'s Party";
-//			displayPartyQueue.addElement(nextParty);
-//		}
-//		return displayPartyQueue;
-//	}
 
     /**
      * Accessor for the number of lanes represented by the ControlDesk
@@ -199,5 +167,4 @@ class ControlDesk extends Thread {
 	public HashSet getLanes() {
 		return lanes;
 	}
-//	public Queue getQueue() { return partyQueue; }
 }

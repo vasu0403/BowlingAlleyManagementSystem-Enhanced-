@@ -4,10 +4,16 @@ public class PlayingParties {
     public PlayingParties() {
         partyQueue = new Queue();
     }
+
+	/**
+	 * Creates a party from a Vector of nickNAmes and adds them to the wait queue.
+	 *
+	 * @param partyNicks	A Vector of NickNames
+	 *
+	 */
     public void addPartyQueue(Vector partyNicks) {
 		Party newParty = new Party(partyNicks);
 		getQueue().add(newParty);
-//		publish(new ControlDeskEvent(getPartyQueue()));
 	}
 
     /**
@@ -16,7 +22,6 @@ public class PlayingParties {
      * @return a Vecotr of Strings
      *
      */
-
 	public Vector getPartyQueue() {
 		Vector displayPartyQueue = new Vector();
 		for ( int i=0; i < ( (Vector)getQueue().asVector()).size(); i++ ) {
