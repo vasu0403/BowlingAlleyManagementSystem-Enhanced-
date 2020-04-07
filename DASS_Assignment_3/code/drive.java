@@ -8,10 +8,11 @@ public class drive {
 		int numLanes = 3;
 		int maxPatronsPerParty=5;
 
-		Alley a = new Alley( numLanes );
+		PlayingParties playingParties = new PlayingParties();
+		Alley a = new Alley( numLanes, playingParties );
 		ControlDesk controlDesk = a.getControlDesk();
 
-		ControlDeskView cdv = new ControlDeskView( controlDesk, maxPatronsPerParty);
+		ControlDeskView cdv = new ControlDeskView( controlDesk, maxPatronsPerParty, playingParties);
 		controlDesk.subscribe( cdv );
 	}
 }

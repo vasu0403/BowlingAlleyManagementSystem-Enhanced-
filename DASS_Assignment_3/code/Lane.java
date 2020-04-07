@@ -273,11 +273,11 @@ public class Lane extends Thread implements PinsetterObserver {
 	public void run() {
 		
 		while (true) {
-			if (partyAssigned && !gameFinished) {
+			if (isPartyAssigned() && !gameFinished) {
 				// we have a party on this lane,
 				// so next bower can take a throw
 				continueGame();
-			} else if (partyAssigned && gameFinished) {
+			} else if (isPartyAssigned() && gameFinished) {
 				endGame();
 			}
 

@@ -30,15 +30,16 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	private int maxMembers;
 	
 	private ControlDesk controlDesk;
-
+	private PlayingParties playingParties;
 	/**
 	 * Displays a GUI representation of the ControlDesk
 	 *
 	 */
 
-	public ControlDeskView(ControlDesk controlDesk, int maxMembers) {
+	public ControlDeskView(ControlDesk controlDesk, int maxMembers, PlayingParties playingParties) {
 
 		this.controlDesk = controlDesk;
+		this.playingParties = playingParties;
 		this.maxMembers = maxMembers;
 		int numLanes = controlDesk.getNumLanes();
 
@@ -131,7 +132,8 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 */
 
 	public void updateAddParty(AddPartyView addPartyView) {
-		controlDesk.addPartyQueue(addPartyView.getParty());
+		playingParties.addPartyQueue(addPartyView.getParty());
+		controlDesk.publish(new ControlDeskEvent(playingParties.getPartyQueue()));
 	}
 
 	/**

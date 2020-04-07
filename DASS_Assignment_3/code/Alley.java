@@ -28,8 +28,8 @@
 public class Alley {
 	public ControlDesk controldesk;
 
-    public Alley( int numLanes ) {
-        controldesk = new ControlDesk( numLanes );
+    public Alley( int numLanes, PlayingParties playingParties ) {
+        controldesk = new ControlDesk( numLanes, playingParties );
     }
 
 	public ControlDesk getControlDesk() {
