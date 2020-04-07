@@ -11,7 +11,7 @@
 import java.util.Vector;
  
 public class Queue {
-	private Vector v;
+	private final Vector v;
 	
 	/** Queue()
 	 * 

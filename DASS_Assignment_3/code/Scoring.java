@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Iterator;
+
 public class Scoring {
     /** resetScores()
      *
@@ -79,5 +80,4 @@ public class Scoring {
         }
         return totalScore;
     }
-
 }

@@ -9,19 +9,16 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.event.*;
 
 import java.util.*;
-import java.text.*;
 
 public class EndGameReport implements ActionListener, ListSelectionListener {
 
-	private JFrame win;
-	private JButton printButton, finished;
-	private JList memberList;
-	private Vector myVector;
-	private Vector retVal;
+	private final JFrame win;
+	private final JButton printButton;
+	private final JButton finished;
+	private final Vector retVal;
 
 	private int result;
 
@@ -42,8 +39,8 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 		Iterator iter = (party.getMembers()).iterator();
 		while (iter.hasNext()){
 			myVector.add( ((Bowler)iter.next()).getNick() );
-		}	
-		memberList = new JList(myVector);
+		}
+		JList memberList = new JList(myVector);
 		memberList.setFixedCellWidth(120);
 		memberList.setVisibleRowCount(5);
 		memberList.addListSelectionListener(this);
@@ -51,7 +48,7 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 		//        partyPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		partyPanel.add(partyPane);
 
-		partyPanel.add( memberList );
+		partyPanel.add(memberList);
 
 		// Button Panel
 		JPanel buttonPanel = Panels.gridPanel("", 2, 1);
@@ -72,7 +69,7 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 		win.setLocation(
 			((screenSize.width) / 2) - ((win.getSize().width) / 2),
 			((screenSize.height) / 2) - ((win.getSize().height) / 2));
-		win.show();
+		win.setVisible(true);
 
 	}
 
@@ -82,7 +79,7 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 			retVal.add(selectedMember);
 		}
 		if (e.getSource().equals(finished)) {		
-			win.hide();
+			win.setVisible(false);
 			result = 1;
 		}
 
@@ -105,7 +102,7 @@ public class EndGameReport implements ActionListener, ListSelectionListener {
 	}
 	
 	public void destroy() {
-		win.hide();
+		win.setVisible(false);
 	}
 
 }

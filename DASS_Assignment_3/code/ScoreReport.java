@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.Vector;
 import java.util.Iterator;
 import java.net.*;
-import java.awt.*;
 import java.awt.print.*;
 
 public class ScoreReport {
@@ -59,8 +58,6 @@ public class ScoreReport {
 			BufferedWriter out =
 				new BufferedWriter(
 					new OutputStreamWriter(s.getOutputStream(), "8859_1"));
-
-			String boundary = "DataSeparatorString";
 
 			// here you are supposed to send your username
 			sendln(in, out, "HELO world");

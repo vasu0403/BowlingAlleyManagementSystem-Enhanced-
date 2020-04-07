@@ -24,6 +24,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 
 	private final JButton addParty;
 	private final JButton finished;
+	private final JButton history;
 	private final JFrame win;
 	private final JList partyList;
 	
@@ -52,6 +53,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		JPanel controlsPanel = Panels.gridPanel("Controls", 3, 1);
 		addParty = Panels.button("Add Party", controlsPanel, this);
 		finished = Panels.button("Finished", controlsPanel, this);
+		history = Panels.button("History", controlsPanel, this);
 
 		JPanel laneStatusPanel = Panels.gridPanel("Lane Status", numLanes, 1);
 
@@ -115,9 +117,13 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 *
 	 */
 
+	@SuppressWarnings("unused")
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(addParty)) {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
+		}
+		if (e.getSource().equals(history)) {
+			HistoryView historyView = new HistoryView();
 		}
 		if (e.getSource().equals(finished)) {
 			win.setVisible(false);

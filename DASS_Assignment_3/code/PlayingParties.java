@@ -1,6 +1,6 @@
 import java.util.*;
 public class PlayingParties {
-    private Queue partyQueue;
+    private final Queue partyQueue;
     public PlayingParties() {
         partyQueue = new Queue();
     }

@@ -12,19 +12,15 @@ public class LaneView implements LaneObserver, ActionListener {
 
 	private boolean initDone = true;
 
-	JFrame frame;
-	Container cpanel;
-	Vector bowlers;
+	private final JFrame frame;
+	private final Container cpanel;
+	private Vector bowlers;
 
-	JPanel[][] balls;
-	JLabel[][] ballLabel;
-	JPanel[][] scores;
-	JLabel[][] scoreLabel;
-	JPanel[][] ballGrid;
-	JPanel[] pins;
+	private JLabel[][] ballLabel;
+	private JLabel[][] scoreLabel;
 
-	JButton maintenance;
-	Lane lane;
+	private JButton maintenance;
+	private final Lane lane;
 
 	public LaneView(Lane lane, int laneNum) {
 
@@ -37,7 +33,7 @@ public class LaneView implements LaneObserver, ActionListener {
 
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				frame.hide();
+				frame.setVisible(true);
 			}
 		});
 
@@ -46,11 +42,11 @@ public class LaneView implements LaneObserver, ActionListener {
 	}
 
 	public void show() {
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	public void hide() {
-		frame.hide();
+		frame.setVisible(false);
 	}
 
 	private JPanel makeFrame(Party party) {
@@ -61,12 +57,12 @@ public class LaneView implements LaneObserver, ActionListener {
 
 		JPanel panel = Panels.gridPanel("", 0, 1);
 
-		balls = new JPanel[numBowlers][23];
+		JPanel[][] balls = new JPanel[numBowlers][23];
 		ballLabel = new JLabel[numBowlers][23];
-		scores = new JPanel[numBowlers][10];
+		JPanel[][] scores = new JPanel[numBowlers][10];
 		scoreLabel = new JLabel[numBowlers][10];
-		ballGrid = new JPanel[numBowlers][10];
-		pins = new JPanel[numBowlers];
+		JPanel[][] ballGrid = new JPanel[numBowlers][10];
+		JPanel[] pins = new JPanel[numBowlers];
 
 		for (int i = 0; i != numBowlers; i++) {
 			for (int j = 0; j != 23; j++) {
@@ -150,7 +146,7 @@ public class LaneView implements LaneObserver, ActionListener {
 				for (int i = 0; i <= le.getFrameNum() - 1; i++) {
 					if (lescores[k][i] != 0)
 						scoreLabel[k][i].setText(
-							(new Integer(lescores[k][i])).toString());
+							(Integer.valueOf(lescores[k][i])).toString());
 				}
 				for (int i = 0; i < 21; i++) {
 					if (((int[]) ((HashMap) le.getScore())
@@ -172,11 +168,11 @@ public class LaneView implements LaneObserver, ActionListener {
 								&& i % 2 == 1)
 							ballLabel[k][i].setText("/");
 						else if ( ((int[])((HashMap) le.getScore()).get(bowlers.get(k)))[i] == -2 ){
-							
+
 							ballLabel[k][i].setText("F");
 						} else
 							ballLabel[k][i].setText(
-								(new Integer(((int[]) ((HashMap) le.getScore())
+								(Integer.valueOf(((int[]) ((HashMap) le.getScore())
 									.get(bowlers.get(k)))[i]))
 									.toString());
 				}

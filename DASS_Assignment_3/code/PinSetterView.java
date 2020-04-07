@@ -14,7 +14,6 @@
  */
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.Vector;
 
@@ -22,9 +21,9 @@ import java.util.Vector;
 public class PinSetterView implements PinsetterObserver {
 
 
-    private Vector pinVect = new Vector ( );
-    private JPanel firstRoll;
-    private JPanel secondRoll;
+    private final Vector pinVect = new Vector ( );
+    private final JPanel firstRoll;
+    private final JPanel secondRoll;
 
     /**
      * Constructs a Pin Setter GUI displaying which roll it is with
@@ -39,7 +38,7 @@ public class PinSetterView implements PinsetterObserver {
      */
     
 
-	private JFrame frame;
+	private final JFrame frame;
     
     public PinSetterView ( int laneNum ) {
 	
@@ -175,11 +174,11 @@ public class PinSetterView implements PinsetterObserver {
     }
     
     public void show() {
-    	frame.show();
+    	frame.setVisible(true);
     }
 
     public void hide() {
-    	frame.hide();
+    	frame.setVisible(false);
     }
 
     

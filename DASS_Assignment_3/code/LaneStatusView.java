@@ -12,22 +12,22 @@ import javax.swing.*;
 
 public class LaneStatusView implements ActionListener, LaneObserver, PinsetterObserver {
 
-	private JPanel jp;
+	private final JPanel jp;
 
-	private JLabel curBowler, foul, pinsDown;
-	private JButton viewLane;
-	private JButton viewPinSetter, maintenance;
+	private final JLabel curBowler;
+	private final JLabel pinsDown;
+	private final JButton viewLane;
+	private final JButton viewPinSetter;
+	private final JButton maintenance;
 
-	private PinSetterView psv;
-	private LaneView lv;
-	private Lane lane;
-	int laneNum;
+	private final PinSetterView psv;
+	private final LaneView lv;
+	private final Lane lane;
 
 	boolean laneShowing;
 	boolean psShowing;
 	public LaneStatusView(Lane lane, int laneNum ) {
 		this.lane = lane;
-		this.laneNum = laneNum;
 
 		laneShowing=false;
 		psShowing=false;
@@ -42,7 +42,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 		jp = Panels.flowPanel("");
 		JLabel cLabel = new JLabel( "Now Bowling: " );
 		curBowler = new JLabel( "(no one)" );
-		foul = new JLabel( " " );
+		JLabel foul = new JLabel(" ");
 		JLabel pdLabel = new JLabel( "Pins Down: " );
 		pinsDown = new JLabel( "0" );
 
@@ -76,7 +76,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 				if (psShowing == false) {
 					psv.show();
 					psShowing = true;
-				} else if (psShowing == true) {
+				} else {
 					psv.hide();
 					psShowing = false;
 				}
@@ -85,7 +85,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 				if (laneShowing == false) {
 					lv.show();
 					laneShowing = true;
-				} else if (laneShowing == true) {
+				} else {
 					lv.hide();
 					laneShowing = false;
 				}
@@ -113,7 +113,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 	}
 
 	public void receivePinsetterEvent(PinsetterEvent pe) {
-		pinsDown.setText( ( new Integer(pe.totalPinsDown()) ).toString() );
+		pinsDown.setText((Integer.valueOf(pe.totalPinsDown())).toString() );
 //		foul.setText( ( new Boolean(pe.isFoulCommited()) ).toString() );
 		
 	}

@@ -9,8 +9,8 @@ import java.awt.font.*;
 import java.text.*;
 
 public class PrintableText implements Printable {
-	String text;
-	int POINTS_PER_INCH;
+	private final String text;
+	private final int POINTS_PER_INCH;
 
 	public PrintableText(String t) {
 		POINTS_PER_INCH = 72;
