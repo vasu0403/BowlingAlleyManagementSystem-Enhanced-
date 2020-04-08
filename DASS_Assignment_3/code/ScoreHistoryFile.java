@@ -6,11 +6,6 @@
  * Window>Preferences>Java>Code Generation.
  */
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.util.*;
 import java.io.*;
 
@@ -28,7 +23,7 @@ public class ScoreHistoryFile {
 		out.writeBytes(data);
 		out.close();
 
-		db.adddata(nick, date, score);
+		QueryDB.adddata(nick, date, score);
 	}
 
 	public static Vector getScores(String nick)

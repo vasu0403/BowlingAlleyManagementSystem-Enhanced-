@@ -19,7 +19,7 @@ public class Queries {
     }
 
     public static Vector<String> mostFrequentPlayer() {
-        JSONArray storedData = db.getData();
+        JSONArray storedData = QueryDB.getData();
         int maxFreq = 0;
         HashMap<String, Integer> playerCountMap = new HashMap<String, Integer>();
         for(Object obj: storedData) {
@@ -44,7 +44,7 @@ public class Queries {
     }
 
     public static JSONArray highestScore() {
-        JSONArray storedData = db.getData();
+        JSONArray storedData = QueryDB.getData();
         int maxScore = -1;
         for(Object obj: storedData) {
             JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
@@ -57,7 +57,7 @@ public class Queries {
     }
 
     public static JSONArray lowestScore() {
-        JSONArray storedData = db.getData();
+        JSONArray storedData = QueryDB.getData();
         int minScore = 10000;
         for(Object obj: storedData) {
             JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");

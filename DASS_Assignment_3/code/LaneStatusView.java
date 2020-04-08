@@ -91,7 +91,7 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 				}
 			}
 			if (e.getSource().equals(maintenance)) {
-				lane.unPauseGame();
+				lane.stopMaintenance();
 				maintenance.setBackground(Color.GREEN);
 			}
 		}
@@ -104,6 +104,8 @@ public class LaneStatusView implements ActionListener, LaneObserver, PinsetterOb
 			maintenance.setBackground( Color.RED );
 		}	
 		if ( lane.isPartyAssigned() == false ) {
+			pinsDown.setText("0");
+			curBowler.setText("(no one)");
 			viewLane.setEnabled( false );
 			viewPinSetter.setEnabled( false );
 		} else {

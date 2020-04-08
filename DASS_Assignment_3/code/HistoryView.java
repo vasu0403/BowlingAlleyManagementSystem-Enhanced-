@@ -42,7 +42,7 @@ public class HistoryView implements ActionListener{
 
         JPanel resultPanel = Panels.flowPanel("Result");
         result = new TextArea("Select a query");
-        result.setBounds(10,30, 300,300);
+        result.setBounds(10,30, 250,300);
         result.setEditable(false);
         resultPanel.add(result);
 

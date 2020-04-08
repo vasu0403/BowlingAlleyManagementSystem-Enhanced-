@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class db {
+public class QueryDB {
     private static final String db_file = "SCORE_HISTORY.json";
     public static void adddata(String nick, String date, String score) {
 

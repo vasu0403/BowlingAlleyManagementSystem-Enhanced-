@@ -143,6 +143,7 @@ public class Lane extends Thread implements PinsetterObserver {
 	private Vector subscribers;
 
 	private boolean gameIsHalted;
+	private boolean gameIsPaused;
 
 	private boolean partyAssigned;
 	public boolean gameFinished;
@@ -207,7 +208,6 @@ public class Lane extends Thread implements PinsetterObserver {
 			partyAssigned = false;
 			Iterator scoreIt = party.getMembers().iterator();
 			party = null;
-			partyAssigned = false;
 
 			publish(lanePublish());
 
@@ -215,7 +215,7 @@ public class Lane extends Thread implements PinsetterObserver {
 			while (scoreIt.hasNext()){
 				Bowler thisBowler = (Bowler)scoreIt.next();
 				ScoreReport sr = new ScoreReport( thisBowler, finalScores[myIndex++], gameNumber );
-				sr.sendEmail(thisBowler.getEmail());
+//				sr.sendEmail(thisBowler.getEmail());
 				Iterator printIt = printVector.iterator();
 				while (printIt.hasNext()){
 					if (thisBowler.getNick() == (String)printIt.next()){
@@ -229,7 +229,7 @@ public class Lane extends Thread implements PinsetterObserver {
 
 	}
 	private void continueGame() {
-		while (gameIsHalted) {
+		while (gameIsHalted || gameIsPaused) {
 			try {
 				sleep(10);
 			} catch (Exception e) {}
@@ -242,7 +242,7 @@ public class Lane extends Thread implements PinsetterObserver {
 			canThrowAgain = true;
 			tenthFrameStrike = false;
 			ball = 0;
-			while (canThrowAgain) {
+			while (canThrowAgain && !gameIsPaused) {
 				setter.ballThrown();		// simulate the thrower's ball hiting
 				ball++;
 			}
@@ -364,7 +364,7 @@ public class Lane extends Thread implements PinsetterObserver {
 		cumulScores = new int[party.getMembers().size()][10];
 		finalScores = new int[party.getMembers().size()][128]; //Hardcoding a max of 128 games, bite me.
 		gameNumber = 0;
-		
+		bowlIndex = 0;
 		Scoring.resetScores(this, scores);
 	}
 
@@ -441,7 +441,7 @@ public class Lane extends Thread implements PinsetterObserver {
 	/**
 	 * Pause the execution of this game
 	 */
-	public void pauseGame() {
+	public void maintenance() {
 		gameIsHalted = true;
 		publish(lanePublish());
 	}
@@ -449,8 +449,20 @@ public class Lane extends Thread implements PinsetterObserver {
 	/**
 	 * Resume the execution of this game
 	 */
-	public void unPauseGame() {
+	public void stopMaintenance() {
 		gameIsHalted = false;
 		publish(lanePublish());
+	}
+	public void pauseGame() {
+		gameIsPaused = true;
+		try {
+			Thread.sleep(40);
+		} catch ( InterruptedException e ) {
+			System.err.println( "Interrupted" );
+		}
+		PauseDB.add(party, cumulScores, gameNumber, bowlIndex, frameNumber, scores);
+	}
+	public void resumeGame() {
+		gameIsPaused = false;
 	}
 }

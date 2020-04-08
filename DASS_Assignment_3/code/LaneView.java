@@ -20,6 +20,8 @@ public class LaneView implements LaneObserver, ActionListener {
 	private JLabel[][] scoreLabel;
 
 	private JButton maintenance;
+	private JButton pauseGame;
+	private JButton resumeGame;
 	private final Lane lane;
 
 	public LaneView(Lane lane, int laneNum) {
@@ -134,6 +136,9 @@ public class LaneView implements LaneObserver, ActionListener {
 				buttonPanel.setLayout(new FlowLayout());
 
 				maintenance = Panels.button("Maintenance Call", buttonPanel, this);
+				pauseGame = Panels.button("Pause Game", buttonPanel, this);
+				resumeGame = Panels.button("Resume Game", buttonPanel, this);
+				resumeGame.setEnabled(false);
 
 				cpanel.add(buttonPanel, "South");
 
@@ -183,7 +188,17 @@ public class LaneView implements LaneObserver, ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(maintenance)) {
+			lane.maintenance();
+		}
+		if (e.getSource().equals(pauseGame)) {
 			lane.pauseGame();
+			resumeGame.setEnabled(true);
+			pauseGame.setEnabled(false);
+		}
+		if(e.getSource().equals(resumeGame)) {
+			lane.resumeGame();
+			resumeGame.setEnabled(false);
+			pauseGame.setEnabled(true);
 		}
 	}
 
