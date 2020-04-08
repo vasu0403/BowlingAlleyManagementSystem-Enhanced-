@@ -161,6 +161,7 @@ public class Lane extends Thread implements PinsetterObserver {
 	
 	public Bowler currentThrower;			// = the thrower who just took a throw              // might change this back
 	private Boolean makeFrameAgain;
+	private String pausedParty;
 	/** Lane()
 	 * 
 	 * Constructs a new lane and starts its thread
@@ -168,7 +169,8 @@ public class Lane extends Thread implements PinsetterObserver {
 	 * @pre none
 	 * @post a new lane has been created and its thered is executing
 	 */
-	public Lane() { 
+	public Lane() {
+		pausedParty = "";
 		setter = new Pinsetter();
 		scores = new HashMap();
 		subscribers = new Vector();
@@ -436,7 +438,7 @@ public class Lane extends Thread implements PinsetterObserver {
 		gameIsHalted = true;
 		publish(lanePublish());
 	}
-	
+
 	/**
 	 * Resume the execution of this game
 	 */
@@ -451,9 +453,10 @@ public class Lane extends Thread implements PinsetterObserver {
 		} catch ( InterruptedException e ) {
 			System.err.println( "Interrupted" );
 		}
-		PauseDB.add(party, cumulScores, gameNumber, bowlIndex, frameNumber, scores, ball);
+		pausedParty = PauseDB.add(party, cumulScores, gameNumber, bowlIndex, frameNumber, scores, ball);
 	}
 	public void resumeGame() {
+		PauseDB.remData(pausedParty);
 		gameIsPaused = false;
 	}
 }

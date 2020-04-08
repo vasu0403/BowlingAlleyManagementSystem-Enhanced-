@@ -23,7 +23,7 @@ public class PauseDB {
         }
     }
 
-    public static void add(Party party, int[][] cumulScores, int gameNumber, int bowlIndex, int frameNumber, HashMap scores, int ball) {
+    public static String add(Party party, int[][] cumulScores, int gameNumber, int bowlIndex, int frameNumber, HashMap scores, int ball) {
         JSONObject saveScores = new JSONObject();
         Iterator iterator = scores.entrySet().iterator();
         while(iterator.hasNext()) {
@@ -66,6 +66,7 @@ public class PauseDB {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return playingBowlerNames.toString();
     }
     public static Vector get() {
         JSONArray storedData;
@@ -119,5 +120,32 @@ public class PauseDB {
             e.printStackTrace();
         }
         return flag;
+    }
+    public static void remData(String pausedParty) {
+        JSONArray storedData;
+        JSONArray newData = new JSONArray();
+        JSONParser jsonParser = new JSONParser();
+        boolean flag = true;
+        try (FileReader reader = new FileReader(db_file)) {
+            Object obj = jsonParser.parse(reader);
+            storedData = (JSONArray) obj;
+            for(Object obj2: storedData) {
+                JSONObject curGame = (JSONObject)((JSONObject) obj2).get("game");
+                String curParty = curGame.get("party").toString();
+                if(pausedParty.equals(curParty) && flag) {
+                    flag = false;
+                } else {
+                    newData.add(obj2);
+                }
+            }
+            writeInFile(newData);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 }
