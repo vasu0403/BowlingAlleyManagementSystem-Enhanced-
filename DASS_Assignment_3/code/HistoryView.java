@@ -5,12 +5,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.Vector;
 
 public class HistoryView implements ActionListener{
     private final JFrame win;
-    private final JButton topPlayer;
+    private final JButton mostFrequentPlayer;
     private final JButton highestScore;
     private final JButton lowestScore;
     private TextArea result;
@@ -37,7 +36,7 @@ public class HistoryView implements ActionListener{
         colPanel.setLayout(new BorderLayout());
 
         JPanel queryPanel = Panels.gridPanel("Query", 3, 1);
-        topPlayer = Panels.button("Top Player", queryPanel, this);
+        mostFrequentPlayer = Panels.button("Most Frequent Player", queryPanel, this);
         highestScore = Panels.button("Highest Score", queryPanel, this);
         lowestScore = Panels.button("Lowest Score", queryPanel, this);
 
@@ -62,17 +61,25 @@ public class HistoryView implements ActionListener{
         win.setVisible(true);
     }
     public void actionPerformed( ActionEvent e ) {
-        JSONArray queryResult;
-        if (e.getSource().equals(topPlayer)) {
-//            queryResult = Queries.topPlayer();x`
-//            result.setText(queryResult);
-
+        if (e.getSource().equals(mostFrequentPlayer)) {
+            Vector<String> queryResult;
+            queryResult = Queries.mostFrequentPlayer();
+            if(queryResult.size() == 0) {
+                result.setText("You need to run some simulations first :(");
+            } {
+                result.setText("Following are the most frequent players:\n");
+                for(String nicks: queryResult) {
+                    result.append(nicks + "\n");
+                }
+            }
         }
         if (e.getSource().equals(highestScore)) {
+            JSONArray queryResult;
             queryResult = Queries.highestScore();
             setHighMinScore("Max Score: ", queryResult);
         }
         if (e.getSource().equals(lowestScore)) {
+            JSONArray queryResult;
             queryResult = Queries.lowestScore();
             setHighMinScore("Min Score: ", queryResult);
 

@@ -1,22 +1,50 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Queries {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
-    public static String topPlayer() {
+public class Queries {
+    private static JSONArray findMatchingPlayer(int required, JSONArray storedData) {
+        JSONArray retData = new JSONArray();
+        for(Object obj: storedData) {
+            JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
+            int curScore = Integer.parseInt(curPlayer.get("score").toString());
+            if(curScore == required) {
+                retData.add(((JSONObject) obj));
+            }
+        }
+        return retData;
+    }
+
+    public static Vector<String> mostFrequentPlayer() {
         JSONArray storedData = db.getData();
-        storedData.forEach(obj -> {
-            JSONObject curPlayer = (JSONObject) ((JSONObject) obj).get("player");
-            System.out.println(curPlayer.get("nick"));
-        });
-        String ret = "Searching for top player";
-        return ret;
+        int maxFreq = 0;
+        HashMap<String, Integer> playerCountMap = new HashMap<String, Integer>();
+        for(Object obj: storedData) {
+            JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
+            String nick = curPlayer.get("nick").toString();
+            if(playerCountMap.containsKey(nick)) {
+                playerCountMap.put(nick, playerCountMap.get(nick) + 1);
+            } else {
+                playerCountMap.put(nick, 1);
+            }
+            maxFreq = Math.max(maxFreq, playerCountMap.get(nick));
+        }
+        Vector<String> retVector = new Vector<String>();
+        for (Map.Entry mapElement : playerCountMap.entrySet()) {
+            String playerNick = (String)mapElement.getKey();
+            int frequency = (int)mapElement.getValue();
+            if(frequency == maxFreq) {
+                retVector.add(playerNick);
+            }
+        }
+        return retVector;
     }
 
     public static JSONArray highestScore() {
         JSONArray storedData = db.getData();
-        JSONArray retData = new JSONArray();
-
         int maxScore = -1;
         for(Object obj: storedData) {
             JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
@@ -25,20 +53,11 @@ public class Queries {
                 maxScore = curScore;
             }
         }
-        for(Object obj: storedData) {
-            JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
-            int curScore = Integer.parseInt(curPlayer.get("score").toString());
-            if(curScore == maxScore) {
-                retData.add(((JSONObject) obj));
-            }
-        }
-        return retData;
+        return findMatchingPlayer(maxScore, storedData);
     }
 
     public static JSONArray lowestScore() {
         JSONArray storedData = db.getData();
-        JSONArray retData = new JSONArray();
-
         int minScore = 10000;
         for(Object obj: storedData) {
             JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
@@ -47,13 +66,6 @@ public class Queries {
                 minScore = curScore;
             }
         }
-        for(Object obj: storedData) {
-            JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
-            int curScore = Integer.parseInt(curPlayer.get("score").toString());
-            if(curScore == minScore) {
-                retData.add(((JSONObject) obj));
-            }
-        }
-        return retData;
+        return findMatchingPlayer(minScore, storedData);
     }
 }
