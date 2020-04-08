@@ -6,6 +6,11 @@
  * Window>Preferences>Java>Code Generation.
  */
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.util.*;
 import java.io.*;
 
@@ -18,10 +23,12 @@ public class ScoreHistoryFile {
 
 		String data = nick + "\t" + date + "\t" + score + "\n";
 
-		RandomAccessFile out = new RandomAccessFile(SCOREHISTORY_DAT, "rw");
+		RandomAccessFile out = new RandomAccessFile(SCOREHISTORY_DAT, "rw");					// Storing the result in a DAT file. This part can be removed
 		out.skipBytes((int) out.length());
 		out.writeBytes(data);
 		out.close();
+
+		db.adddata(nick, date, score);
 	}
 
 	public static Vector getScores(String nick)
