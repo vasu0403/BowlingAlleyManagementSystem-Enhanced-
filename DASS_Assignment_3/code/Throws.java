@@ -27,6 +27,7 @@ public class Throws {
             //Add the next two balls to the current cumulscore.
             lane.cumulScores[bowlIndex][i/2] += 10;
             if(curScore[i+1] != -1) {
+                System.out.println(i);
                 lane.cumulScores[bowlIndex][i/2] += curScore[i+1] + lane.cumulScores[bowlIndex][(i/2)-1];
                 if (curScore[i+2] != -1){
                     if( curScore[i+2] != -2){

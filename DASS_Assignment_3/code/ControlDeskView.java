@@ -141,7 +141,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	}
 
 	public boolean notifyControlDesk(Object obj) {
-		boolean found = controlDesk.findLane(obj);
+		boolean found = controlDesk.assignLane(true, obj);
 		return found;
 	}
 	/**
