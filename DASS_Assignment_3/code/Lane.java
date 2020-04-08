@@ -144,22 +144,22 @@ public class Lane extends Thread implements PinsetterObserver {
 	private boolean gameIsHalted;
 	private boolean gameIsPaused;
 
-	private boolean partyAssigned;
+	public boolean partyAssigned;
 	public boolean gameFinished;
-	private Iterator bowlerIterator;
+	public Iterator bowlerIterator;																// might change this back
 	public int ball;
-	private int bowlIndex;
+	public int bowlIndex;
 	public int frameNumber;
-	private boolean tenthFrameStrike;
+	public boolean tenthFrameStrike;															// might change this back
 
 	private int[] curScores;
 	public int[][] cumulScores;
-	private boolean canThrowAgain;
+	public boolean canThrowAgain;
 	
 	private int[][] finalScores;
-	private int gameNumber;
+	public int gameNumber;
 	
-	private Bowler currentThrower;			// = the thrower who just took a throw
+	public Bowler currentThrower;			// = the thrower who just took a throw              // might change this back
 	private Boolean makeFrameAgain;
 	/** Lane()
 	 * 
@@ -175,109 +175,76 @@ public class Lane extends Thread implements PinsetterObserver {
 
 		gameIsHalted = false;
 		partyAssigned = false;
-
+		makeFrameAgain = false;
 		gameNumber = 0;
 
 		setter.subscribe( this );
-		
+
 		this.start();
 	}
 
+//	private void continueGame() {
+//		while (gameIsHalted || gameIsPaused) {
+//			try {
+//				sleep(10);
+//			} catch (Exception e) {}
+//		}
+//
+//
+//		if (bowlerIterator.hasNext()) {
+//			currentThrower = (Bowler)bowlerIterator.next();
+//
+//			canThrowAgain = true;
+//			tenthFrameStrike = false;
+//			ball = 0;
+//			while (canThrowAgain && !gameIsPaused) {
+//				setter.ballThrown();		// simulate the thrower's ball hiting
+//				ball++;
+//			}
+//
+//			if (frameNumber == 9){
+//				finalScores[bowlIndex][gameNumber] = cumulScores[bowlIndex][9];
+//				try{
+//					Date date = new Date();
+//					String dateString = "" + date.getHours() + ":" + date.getMinutes() + " " + date.getMonth() + "/" + date.getDay() + "/" + (date.getYear() + 1900);
+//					ScoreHistoryFile.addScore(currentThrower.getNick(), dateString, new Integer(cumulScores[bowlIndex][9]).toString());
+//				} catch (Exception e) {System.err.println("Exception in addScore. "+ e );}
+//			}
+//
+//
+//			setter.reset();
+//			bowlIndex++;
+//
+//		} else {
+//			frameNumber++;
+//			resetBowlerIterator();
+//			bowlIndex = 0;
+//			if (frameNumber > 9) {
+//				gameFinished = true;
+//				gameNumber++;
+//			}
+//		}
+//	}
+
 	/** run()
-	 * 
-	 * entry point for execution of this lane 
+	 *
+	 * entry point for execution of this lane
 	 */
-	private void endGame() {
-		EndGamePrompt egp = new EndGamePrompt( ((Bowler) party.getMembers().get(0)).getNickName() + "'s Party" );
-		int result = egp.getResult();
-		egp.distroy();
-		egp = null;
-
-
-		System.out.println("result was: " + result);
-		// TODO: send record of scores to control desk
-		if (result == 1) {					// yes, want to play again
-			Scoring.resetScores(this, scores);
-			resetBowlerIterator();
-
-		} else if (result == 2) {// no, dont want to play another game
-			Vector printVector;
-			EndGameReport egr = new EndGameReport( ((Bowler)party.getMembers().get(0)).getNickName() + "'s Party", party);
-			printVector = egr.getResult();
-			partyAssigned = false;
-			Iterator scoreIt = party.getMembers().iterator();
-			party = null;
-
-			publish(lanePublish());
-
-			int myIndex = 0;
-			while (scoreIt.hasNext()){
-				Bowler thisBowler = (Bowler)scoreIt.next();
-				ScoreReport sr = new ScoreReport( thisBowler, finalScores[myIndex++], gameNumber );
-//				sr.sendEmail(thisBowler.getEmail());
-				Iterator printIt = printVector.iterator();
-				while (printIt.hasNext()){
-					if (thisBowler.getNick() == (String)printIt.next()){
-						System.out.println("Printing " + thisBowler.getNick());
-						sr.sendPrintout();
-					}
-				}
-
-			}
-		}
-
-	}
-	private void continueGame() {
-		while (gameIsHalted || gameIsPaused) {
-			try {
-				sleep(10);
-			} catch (Exception e) {}
-		}
-
-
-		if (bowlerIterator.hasNext()) {
-			currentThrower = (Bowler)bowlerIterator.next();
-
-			canThrowAgain = true;
-			tenthFrameStrike = false;
-			ball = 0;
-			while (canThrowAgain && !gameIsPaused) {
-				setter.ballThrown();		// simulate the thrower's ball hiting
-				ball++;
-			}
-
-			if (frameNumber == 9){
-				finalScores[bowlIndex][gameNumber] = cumulScores[bowlIndex][9];
-				try{
-					Date date = new Date();
-					String dateString = "" + date.getHours() + ":" + date.getMinutes() + " " + date.getMonth() + "/" + date.getDay() + "/" + (date.getYear() + 1900);
-					ScoreHistoryFile.addScore(currentThrower.getNick(), dateString, new Integer(cumulScores[bowlIndex][9]).toString());
-				} catch (Exception e) {System.err.println("Exception in addScore. "+ e );}
-			}
-
-
-			setter.reset();
-			bowlIndex++;
-
-		} else {
-			frameNumber++;
-			resetBowlerIterator();
-			bowlIndex = 0;
-			if (frameNumber > 9) {
-				gameFinished = true;
-				gameNumber++;
-			}
-		}
-	}
 	public void run() {
 		
 		while (true) {
 			if (isPartyAssigned() && !gameFinished) {
 				// we have a party on this lane,
 				// so next bower can take a throw
-				continueGame();
+				while (gameIsHalted || gameIsPaused) {
+					try {
+						sleep(10);
+					} catch (Exception e) {}
+				}
+				Simulation.continueGame(gameIsPaused, finalScores, cumulScores, setter, this);
+//				continueGame();
 			} else if (isPartyAssigned() && gameFinished) {
-				endGame();
+				Simulation.endGame(this, scores, party, finalScores, gameNumber);
 			}
 
 			try {
@@ -341,7 +308,7 @@ public class Lane extends Thread implements PinsetterObserver {
 	 * @pre the party as been assigned
 	 * @post the iterator points to the first bowler in the party
 	 */
-	private void resetBowlerIterator() {
+	public void resetBowlerIterator() {
 		bowlerIterator = (party.getMembers()).iterator();
 	}
 
@@ -433,17 +400,6 @@ public class Lane extends Thread implements PinsetterObserver {
 
 	public void subscribe( LaneObserver adding ) {
 		subscribers.add( adding );
-	}
-
-	/** unsubscribe
-	 * 
-	 * Method that unsubscribes an observer from this object
-	 * 
-	 * @param removing	The observer to be removed
-	 */
-	
-	public void unsubscribe( LaneObserver removing ) {
-		subscribers.remove( removing );
 	}
 
 	/** publish

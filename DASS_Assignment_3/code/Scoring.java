@@ -39,7 +39,6 @@ public class Scoring {
 
         curScore = (int[]) lane.scores.get(Cur);
 
-
         curScore[ index - 1] = score;
         lane.scores.put(Cur, curScore);
         getScore( Cur, frame, lane, bowlIndex);
