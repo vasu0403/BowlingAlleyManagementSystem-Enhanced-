@@ -4,6 +4,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 public class ResumeView implements ActionListener, ListSelectionListener {
@@ -15,6 +17,21 @@ public class ResumeView implements ActionListener, ListSelectionListener {
     private String selectedParty;
     private ControlDeskView controlDeskView;
 
+    private void displayErrorMessage() {
+        Frame aFrame = new Frame("Sorry Mssg");
+        aFrame.add(new TextField("No lane is empty currently!"));
+        aFrame.setSize(400, 100);
+        Dimension screenSize = (Toolkit.getDefaultToolkit()).getScreenSize();
+        aFrame.setLocation(
+                ((screenSize.width) / 2) - ((aFrame.getSize().width) / 2),
+                ((screenSize.height) / 2) - ((aFrame.getSize().height) / 2));
+        aFrame.setVisible(true);
+        aFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                aFrame.setVisible(false);
+            }
+        });
+    }
     public ResumeView(ControlDeskView controlDeskView) {
         this.controlDeskView = controlDeskView;
         win = Panels.window("Resume Game");
@@ -44,21 +61,17 @@ public class ResumeView implements ActionListener, ListSelectionListener {
         colPanel.add(savedPanel);
         colPanel.add(buttonPanel);
 
-        win.getContentPane().add("Center", colPanel);
-
-        win.pack();
-
-        // Center Window on Screen
-        Dimension screenSize = (Toolkit.getDefaultToolkit()).getScreenSize();
-        win.setLocation(
-                ((screenSize.width) / 2) - ((win.getSize().width) / 2),
-                ((screenSize.height) / 2) - ((win.getSize().height) / 2));
-        win.setVisible(true);
+        Panels.showWin(win, colPanel);
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(resume)) {
             if(selectedParty != null) {
-                PauseDB.resumeGame(selectedParty, controlDeskView);
+                boolean valid = PauseDB.resumeGame(selectedParty, controlDeskView);
+                if (valid) {
+                    win.setVisible(false);
+                } else {
+                    displayErrorMessage();
+                }
             }
 
         }

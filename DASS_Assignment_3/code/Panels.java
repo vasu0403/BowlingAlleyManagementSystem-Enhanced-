@@ -46,4 +46,17 @@ public class Panels {
         panel.add(newPanel);
         return retField;
     }
+
+    public static void showWin(JFrame win, JPanel colPanel) {
+        win.getContentPane().add("Center", colPanel);
+
+        win.pack();
+
+        // Center Window on Screen
+        Dimension screenSize = (Toolkit.getDefaultToolkit()).getScreenSize();
+        win.setLocation(
+                ((screenSize.width) / 2) - ((win.getSize().width) / 2),
+                ((screenSize.height) / 2) - ((win.getSize().height) / 2));
+        win.setVisible(true);
+    }
 }

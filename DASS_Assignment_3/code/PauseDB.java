@@ -88,23 +88,23 @@ public class PauseDB {
         }
         return retData;
     }
-    public static void resumeGame(String party, ControlDeskView controlDeskView) {
+    public static boolean resumeGame(String party, ControlDeskView controlDeskView) {
         JSONArray storedData;
         JSONArray newData = new JSONArray();
         JSONParser jsonParser = new JSONParser();
-        boolean flag = true;
+        boolean flag = false;
         try (FileReader reader = new FileReader(db_file)) {
             Object obj = jsonParser.parse(reader);
             storedData = (JSONArray) obj;
             for(Object obj2: storedData) {
                 JSONObject curGame = (JSONObject)((JSONObject) obj2).get("game");
                 String curParty = curGame.get("party").toString();
-                if(party.equals(curParty) && flag) {
+                if(party.equals(curParty) && !flag) {
                     boolean valid = controlDeskView.notifyControlDesk(obj2);
                     if(!valid) {
                         newData.add(obj2);
                     } else {
-                        flag = false;
+                        flag = true;
                     }
                 } else {
                     newData.add(obj2);
@@ -118,5 +118,6 @@ public class PauseDB {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return flag;
     }
 }
