@@ -1,3 +1,6 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +15,21 @@ public class HistoryView implements ActionListener{
     private final JButton lowestScore;
     private TextArea result;
 
+    private void setHighMinScore(String description, JSONArray queryResult) {
+        if(queryResult.size() > 0) {
+            int maxscore = 0;
+            String details = "";
+            for(Object obj: queryResult) {
+                JSONObject curPlayer = (JSONObject)((JSONObject) obj).get("player");
+                maxscore = Integer.parseInt(curPlayer.get("score").toString());
+                details += curPlayer.get("nick").toString() + " on " + curPlayer.get("date") + "\n";
+            }
+            result.setText(description + maxscore + " ...Scored by the following players:\n");
+            result.append(details);
+        } else {
+            result.setText("You need to run sum simulations first :(");
+        }
+    }
     public HistoryView() {
         win = Panels.window("History");
 
@@ -44,20 +62,19 @@ public class HistoryView implements ActionListener{
         win.setVisible(true);
     }
     public void actionPerformed( ActionEvent e ) {
-        String queryResult;
+        JSONArray queryResult;
         if (e.getSource().equals(topPlayer)) {
-            queryResult = Queries.topPlayer();
-            result.setText(queryResult);
+//            queryResult = Queries.topPlayer();x`
+//            result.setText(queryResult);
 
         }
         if (e.getSource().equals(highestScore)) {
             queryResult = Queries.highestScore();
-            result.setText(queryResult);
-
+            setHighMinScore("Max Score: ", queryResult);
         }
         if (e.getSource().equals(lowestScore)) {
             queryResult = Queries.lowestScore();
-            result.setText(queryResult);
+            setHighMinScore("Min Score: ", queryResult);
 
         }
     }
