@@ -131,10 +131,9 @@
  * 
  */
 
-import java.util.Vector;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.util.Date;
+import org.json.simple.JSONObject;
+
+import java.util.*;
 
 public class Lane extends Thread implements PinsetterObserver {	
 	public Party party;
@@ -161,7 +160,7 @@ public class Lane extends Thread implements PinsetterObserver {
 	private int gameNumber;
 	
 	private Bowler currentThrower;			// = the thrower who just took a throw
-
+	private Boolean makeFrameAgain;
 	/** Lane()
 	 * 
 	 * Constructs a new lane and starts its thread
@@ -355,19 +354,54 @@ public class Lane extends Thread implements PinsetterObserver {
 	 * 
 	 * @param theParty		Party to be assigned
 	 */
-	public void assignParty( Party theParty ) {
-		party = theParty;
+	private void initFields() {
 		resetBowlerIterator();
-		partyAssigned = true;
-		
+
 		curScores = new int[party.getMembers().size()];
 		cumulScores = new int[party.getMembers().size()][10];
 		finalScores = new int[party.getMembers().size()][128]; //Hardcoding a max of 128 games, bite me.
 		gameNumber = 0;
 		bowlIndex = 0;
+
 		Scoring.resetScores(this, scores);
 	}
+	public void assignParty( Party theParty ) {
+		party = theParty;
+		initFields();
+		partyAssigned = true;
+	}
+	private String[] convertStringToArray(String conv) {
+		int len = conv.length();
+		conv = conv.substring(1, len - 1);
+		return conv.split(", ");
+	}
+	public void resumeSavedGame(Object obj) {
 
+		JSONObject game = (JSONObject)((JSONObject) obj).get("game");
+
+		String partyString = (String) game.get("party");
+		String[] partyArray = convertStringToArray(partyString);
+		Vector<String> partyVector = new Vector<String>(Arrays.asList(partyArray));
+		party = new Party(partyVector);
+		initFields();
+
+		JSONObject scoresobj = (JSONObject) game.get("score");
+
+		Iterator bowlIt = (party.getMembers()).iterator();
+		while ( bowlIt.hasNext() ) {
+			Bowler curBowler = (Bowler) bowlIt.next();
+			String bowlerNick = curBowler.getNick();
+			String[] curScores = convertStringToArray((String) scoresobj.get(bowlerNick));
+			int[] array = Arrays.stream(curScores).mapToInt(Integer::parseInt).toArray();
+			scores.put(curBowler, array);
+		}
+		frameNumber =  ((Long) game.get("frameNumber")).intValue();
+		partyAssigned = true;
+		makeFrameAgain = true;
+		publish(lanePublish());
+		makeFrameAgain = false;
+
+	}
 	/** lanePublish()
 	 *
 	 * Method that creates and returns a newly created laneEvent
@@ -375,7 +409,8 @@ public class Lane extends Thread implements PinsetterObserver {
 	 * @return		The new lane event
 	 */
 	public LaneEvent lanePublish(  ) {
-		LaneEvent laneEvent = new LaneEvent(party, bowlIndex, currentThrower, cumulScores, scores, frameNumber+1, ball, gameIsHalted);
+
+		LaneEvent laneEvent = new LaneEvent(party, bowlIndex, currentThrower, cumulScores, scores, frameNumber+1, ball, gameIsHalted, makeFrameAgain);
 		return laneEvent;
 	}
 
@@ -460,7 +495,7 @@ public class Lane extends Thread implements PinsetterObserver {
 		} catch ( InterruptedException e ) {
 			System.err.println( "Interrupted" );
 		}
-		PauseDB.add(party, cumulScores, gameNumber, bowlIndex, frameNumber, scores);
+		PauseDB.add(party, cumulScores, gameNumber, bowlIndex, frameNumber, scores, ball);
 	}
 	public void resumeGame() {
 		gameIsPaused = false;

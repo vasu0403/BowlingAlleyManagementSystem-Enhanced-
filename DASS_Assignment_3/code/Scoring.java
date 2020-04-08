@@ -34,7 +34,6 @@ public class Scoring {
      * @param score	The bowler's score
      */
     public static void markScore( Bowler Cur, int frame, int ball, int score, Lane lane, int bowlIndex){
-        System.out.println(Cur.getNickName());
         int[] curScore;
         int index =  ( (frame - 1) * 2 + ball);
 

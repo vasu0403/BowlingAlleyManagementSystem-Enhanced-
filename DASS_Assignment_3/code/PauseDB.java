@@ -11,10 +11,7 @@ import java.util.*;
 
 public class PauseDB {
     private static final String db_file = "PAUSED_GAMES.json";
-    public static void add(Party party, int[][] cumulScores, int gameNumber, int bowlIndex, int frameNumber, HashMap scores) {
-//        for (Object mapElement : scores.entrySet()) {
-//            System.out.println(mapElement);
-//        }
+    public static void add(Party party, int[][] cumulScores, int gameNumber, int bowlIndex, int frameNumber, HashMap scores, int ball) {
         JSONObject saveScores = new JSONObject();
         Iterator iterator = scores.entrySet().iterator();
         while(iterator.hasNext()) {
@@ -37,6 +34,7 @@ public class PauseDB {
         gameDetails.put("bowlIndex", bowlIndex);
         gameDetails.put("frameNumber", frameNumber);
         gameDetails.put("score", saveScores);
+        gameDetails.put("ball", ball);
 
         JSONObject gameObject = new JSONObject();
         gameObject.put("game", gameDetails);
@@ -67,6 +65,49 @@ public class PauseDB {
                 err.printStackTrace();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Vector get() {
+        JSONArray storedData;
+        JSONParser jsonParser = new JSONParser();
+        Vector retData = new Vector();
+        try (FileReader reader = new FileReader(db_file)) {
+            Object obj = jsonParser.parse(reader);
+            storedData = (JSONArray) obj;
+            for(Object obj2: storedData) {
+                JSONObject curGame = (JSONObject)((JSONObject) obj2).get("game");
+                String curParty = curGame.get("party").toString();
+                retData.add(curParty);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return retData;
+    }
+    public static void resumeGame(String party, ControlDeskView controlDeskView) {
+        JSONArray storedData;
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(db_file)) {
+            Object obj = jsonParser.parse(reader);
+            storedData = (JSONArray) obj;
+            for(Object obj2: storedData) {
+                JSONObject curGame = (JSONObject)((JSONObject) obj2).get("game");
+                String curParty = curGame.get("party").toString();
+                if(party.equals(curParty)) {
+                    boolean valid = controlDeskView.notifyControlDesk(obj2);
+                    return;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();

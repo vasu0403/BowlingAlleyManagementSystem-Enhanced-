@@ -35,8 +35,9 @@ public class LaneEvent {
 	private final int index;
 	private final int frameNum;
 	private final boolean mechProb;
+	private final boolean makeFrameAgain;
 	
-	public LaneEvent( Party pty, int theIndex, Bowler theBowler, int[][] theCumulScore, HashMap theScore, int theFrameNum, int theBall, boolean mechProblem) {
+	public LaneEvent( Party pty, int theIndex, Bowler theBowler, int[][] theCumulScore, HashMap theScore, int theFrameNum, int theBall, boolean mechProblem, boolean makeFrameAgain) {
 		p = pty;
 		index = theIndex;
 		bowler = theBowler;
@@ -45,6 +46,7 @@ public class LaneEvent {
 		frameNum = theFrameNum;
 		ball = theBall;	
 		mechProb = mechProblem;
+		this.makeFrameAgain = makeFrameAgain;
 	}
 	
 	public boolean isMechanicalProblem() {
@@ -78,6 +80,8 @@ public class LaneEvent {
 	public Bowler getBowler() {
 		return bowler;
 	}
+
+	public Boolean getMakeFrameAgain() { return makeFrameAgain; }
 
 };
  

@@ -23,7 +23,7 @@ public class ScoreHistoryFile {
 		out.writeBytes(data);
 		out.close();
 
-		QueryDB.adddata(nick, date, score);
+		QueryDB.addData(nick, date, score);
 	}
 
 	public static Vector getScores(String nick)

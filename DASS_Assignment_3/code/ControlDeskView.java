@@ -25,6 +25,8 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	private final JButton addParty;
 	private final JButton finished;
 	private final JButton history;
+	private final JButton resume;
+
 	private final JFrame win;
 	private final JList partyList;
 	
@@ -50,10 +52,11 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		JPanel colPanel = new JPanel();
 		colPanel.setLayout(new BorderLayout());
 
-		JPanel controlsPanel = Panels.gridPanel("Controls", 3, 1);
+		JPanel controlsPanel = Panels.gridPanel("Controls", 4, 1);
 		addParty = Panels.button("Add Party", controlsPanel, this);
 		finished = Panels.button("Finished", controlsPanel, this);
 		history = Panels.button("History", controlsPanel, this);
+		resume = Panels.button("Resume", controlsPanel, this);
 
 		JPanel laneStatusPanel = Panels.gridPanel("Lane Status", numLanes, 1);
 
@@ -129,6 +132,9 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 			win.setVisible(false);
 			System.exit(0);
 		}
+		if(e.getSource().equals(resume)) {
+			ResumeView resumeView = new ResumeView(this);
+		}
 	}
 
 	/**
@@ -143,6 +149,10 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		controlDesk.publish(new ControlDeskEvent(playingParties.getPartyQueue()));
 	}
 
+	public boolean notifyControlDesk(Object obj) {
+		boolean found = controlDesk.findLane(obj);
+		return found;
+	}
 	/**
 	 * Receive a broadcast from a ControlDesk
 	 *

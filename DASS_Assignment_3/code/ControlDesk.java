@@ -94,7 +94,6 @@ class ControlDesk extends Thread {
      * Iterate through the available lanes and assign the paties in the wait queue if lanes are available.
      *
      */
-
 	public void assignLane() {
 		Iterator it = getLanes().iterator();
 
@@ -109,6 +108,19 @@ class ControlDesk extends Thread {
 		publish(new ControlDeskEvent(playingParties.getPartyQueue()));
 	}
 
+	public boolean findLane(Object obj) {
+		Iterator it = getLanes().iterator();
+
+		while (it.hasNext()) {
+			Lane curLane = (Lane) it.next();
+			if(curLane.isPartyAssigned() == false) {
+				System.out.println("ok.....resuming game");
+				curLane.resumeSavedGame(obj);
+				return true;
+			}
+		}
+		return false;
+	}
     /**
      */
 

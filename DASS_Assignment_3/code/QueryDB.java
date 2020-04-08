@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class QueryDB {
     private static final String db_file = "SCORE_HISTORY.json";
-    public static void adddata(String nick, String date, String score) {
+    public static void addData(String nick, String date, String score) {
 
         JSONArray previousData;
         JSONParser jsonParser = new JSONParser();
