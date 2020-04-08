@@ -11,6 +11,18 @@ import java.util.*;
 
 public class PauseDB {
     private static final String db_file = "PAUSED_GAMES.json";
+
+    private static void writeInFile( JSONArray data) {
+        try (FileWriter file = new FileWriter(db_file)) {
+
+            file.write(data.toJSONString());
+            file.flush();
+
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+    }
+
     public static void add(Party party, int[][] cumulScores, int gameNumber, int bowlIndex, int frameNumber, HashMap scores, int ball) {
         JSONObject saveScores = new JSONObject();
         Iterator iterator = scores.entrySet().iterator();
@@ -44,26 +56,11 @@ public class PauseDB {
             previousData = (JSONArray) obj;
 
             previousData.add(gameObject);
-
-            try (FileWriter file = new FileWriter(db_file)) {
-
-                file.write(previousData.toJSONString());
-                file.flush();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeInFile(previousData);
         } catch (FileNotFoundException e) {					// Make the file if file not found
             previousData = new JSONArray();
             previousData.add(gameObject);
-            try (FileWriter file = new FileWriter(db_file)) {
-
-                file.write(previousData.toJSONString());
-                file.flush();
-
-            } catch (IOException err) {
-                err.printStackTrace();
-            }
+            writeInFile(previousData);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -93,18 +90,27 @@ public class PauseDB {
     }
     public static void resumeGame(String party, ControlDeskView controlDeskView) {
         JSONArray storedData;
+        JSONArray newData = new JSONArray();
         JSONParser jsonParser = new JSONParser();
+        boolean flag = true;
         try (FileReader reader = new FileReader(db_file)) {
             Object obj = jsonParser.parse(reader);
             storedData = (JSONArray) obj;
             for(Object obj2: storedData) {
                 JSONObject curGame = (JSONObject)((JSONObject) obj2).get("game");
                 String curParty = curGame.get("party").toString();
-                if(party.equals(curParty)) {
+                if(party.equals(curParty) && flag) {
                     boolean valid = controlDeskView.notifyControlDesk(obj2);
-                    return;
+                    if(!valid) {
+                        newData.add(obj2);
+                    } else {
+                        flag = false;
+                    }
+                } else {
+                    newData.add(obj2);
                 }
             }
+            writeInFile(newData);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }  catch (IOException e) {
